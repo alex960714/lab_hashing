@@ -1,14 +1,14 @@
 #include "THashTable.h"
 
-int THashTable::HashFunc(TKey key)
+int THashTable::HashFunc(int key)
 {
-	int k = 1, R = 0;
+	/*int k = 1, R = 0;
 	for (int i = 0; i < key.length(); i++)
 	{
 		R += key[i] * k;
 		k *= 2;
-	}
-	return (coeff1 * R + coeff2) % maxSize;
+	}*/
+	return (coeff1 * key + coeff2) % maxSize;
 }
 
 void THashTable::GetHashFunc()
@@ -31,7 +31,7 @@ void THashTable::CreateNewTable()
 	pRec = new TRecord[maxSize];
 	for (int i = 0; i < maxSize; i++)
 	{
-		pRec[i].SetKey("");
+		pRec[i].SetKey(EMPTY_NODE);
 		pRec[i].SetValue("");
 	}
 
@@ -49,7 +49,7 @@ THashTable::THashTable(int _size, int _step)
 	pRec = new TRecord[maxSize];
 	for (int i = 0; i < maxSize; i++)
 	{
-		pRec[i].SetKey("");
+		pRec[i].SetKey(EMPTY_NODE);
 		pRec[i].SetValue("");
 	}
 	GetHashFunc();
@@ -58,7 +58,7 @@ THashTable::THashTable(int _size, int _step)
 	Eff = 0;
 }
 
-bool THashTable::Find(TKey key)
+bool THashTable::Find(int key)
 {
 	curr = HashFunc(key);
 	free = -1;
@@ -72,9 +72,9 @@ bool THashTable::Find(TKey key)
 		}
 		if (pRec[curr].GetKey() == key)
 			return true;
-		if (pRec[curr].GetKey() == "&" && free == -1)
+		if (pRec[curr].GetKey() == DELETED_NODE && free == -1)
 			free = curr;
-		if (pRec[curr].GetKey() != "")
+		if (pRec[curr].GetKey() != EMPTY_NODE)
 		{
 			curr = (step + curr) % maxSize;
 		}
@@ -99,12 +99,12 @@ void THashTable::InsRec(TRecord rec)
 	}*/
 }
 
-void THashTable::DelRec(TKey key)
+void THashTable::DelRec(int key)
 {
 	if (IsEmpty()) return;
 	if (Find(key))
 	{
-		pRec[curr].SetKey("&");
+		pRec[curr].SetKey(DELETED_NODE);
 		DataCount--;
 	}
 	/*else
@@ -116,14 +116,14 @@ void THashTable::DelRec(TKey key)
 void THashTable::Reset()
 {
 	curr = 0;
-	while (curr < maxSize && (pRec[curr].GetKey() == "&" || pRec[curr].GetKey() == ""))
+	while (curr < maxSize && (pRec[curr].GetKey() == DELETED_NODE || pRec[curr].GetKey() == EMPTY_NODE))
 		curr++;
 }
 
 void THashTable::GoNext()
 {
 	curr++;
-	while (curr<maxSize && (pRec[curr].GetKey() == "&" || pRec[curr].GetKey() == ""))
+	while (curr<maxSize && (pRec[curr].GetKey() == DELETED_NODE || pRec[curr].GetKey() == EMPTY_NODE))
 		curr++;
 }
 

@@ -12,15 +12,15 @@ typedef string TValue;
 class TRecord
 {
 private:
-	TKey key;
+	int key;
 	TValue val;
 
 public:
-	TRecord(TKey _k = "", TValue _v = "") { key = _k; val = _v; };
+	TRecord(int _k = -1, TValue _v = "") { key = _k; val = _v; };
 	~TRecord() {};
 
-	void SetKey(TKey _k) { key = _k; };
-	TKey GetKey() { return key; };
+	void SetKey(int _k) { key = _k; };
+	int GetKey() { return key; };
 	void SetValue(TValue _v) { val = _v; };
 	TValue GetValue() { return val; };
 

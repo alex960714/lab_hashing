@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	int k;
 	int op_num, s_num, ins_num, del_num;
 	double s_av, ins_av, del_av;
-	TKey key;
+	int key;
 	TValue val;
 	TRecord rec;
 	cout << "¬ведите максимальный размер таблицы:" << endl;
@@ -25,12 +25,12 @@ int main(int argc, char **argv)
 	THashTable hash(maxSize, step);
 	for (int i = 0; i < el_num; i++)
 	{
-		key = "";
+
+		key = rand() % 10000;
 		val = "";
 		k = rand() % 5 + 1;
 		for (int j = 0; j < k; j++)
 		{
-			key += (rand() % 10 + '0');
 			val += (rand() % 10 + '0');
 		}
 		rec.SetKey(key);
@@ -45,24 +45,22 @@ int main(int argc, char **argv)
 	cout << "„исло элементов в таблице: " << hash.GetDataCount() << endl;
 	for (int i = 0; i < op_num; i++)
 	{
-		key = "";
+		key = rand() % 10000;
 		val = "";
 		k = rand() % 5 + 1;
 		for (int j = 0; j < k; j++)
 		{
-			key += (rand() % 10 + '0');
 			val += (rand() % 10 + '0');
 		}
 		hash.ResetEff();
 		hash.Find(key);
 		s_num += hash.GetEff();
 
-		key = "";
+		key = rand() % 10000;
 		val = "";
 		k = rand() % 5 + 1;
 		for (int j = 0; j < k; j++)
 		{
-			key += (rand() % 10 + '0');
 			val += (rand() % 10 + '0');
 		}
 
@@ -70,12 +68,11 @@ int main(int argc, char **argv)
 		hash.InsRec(rec);
 		ins_num += hash.GetEff();
 
-		key = "";
+		key = rand() % 10000;
 		val = "";
 		k = rand() % 5 + 1;
 		for (int j = 0; j < k; j++)
 		{
-			key += (rand() % 10 + '0');
 			val += (rand() % 10 + '0');
 		}
 
