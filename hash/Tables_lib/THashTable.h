@@ -8,8 +8,8 @@
 class THashTable :public TTable
 {
 protected:
-	int HashFunc(int key);
-	void GetHashFunc();
+	virtual int HashFunc(int key);
+	virtual void GetHashFunc();
 	void CreateNewTable();
 
 	int maxSize, curr, step, free;

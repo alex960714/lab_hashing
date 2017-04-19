@@ -137,11 +137,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TCuckooHash.h" />
     <ClInclude Include="THashTable.h" />
     <ClInclude Include="TRecord.h" />
     <ClInclude Include="TTable.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="TCuckooHash.cpp" />
     <ClCompile Include="THashTable.cpp" />
     <ClCompile Include="TRecord.cpp" />
     <ClCompile Include="TTable.cpp" />
