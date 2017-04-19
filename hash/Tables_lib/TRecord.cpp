@@ -11,7 +11,7 @@ TRecord& TRecord::operator=(const TRecord &rec)
 istream& operator>>(istream &is, TRecord &rec)
 {
 	int _key;
-	string _val;
+	int _val;
 	is >> _key;
 	is >> _val;
 	rec.key = _key;
@@ -22,7 +22,7 @@ istream& operator>>(istream &is, TRecord &rec)
 ostream& operator<<(ostream &os, const TRecord &rec)
 {
 	int _key = rec.key;
-	string _val = rec.val;
+	int _val = rec.val;
 	os << " " << _key << " | " << _val << " " << endl;
 	return os;
 }

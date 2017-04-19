@@ -32,7 +32,7 @@ void THashTable::CreateNewTable()
 	for (int i = 0; i < maxSize; i++)
 	{
 		pRec[i].SetKey(EMPTY_NODE);
-		pRec[i].SetValue("");
+		pRec[i].SetValue(EMPTY_NODE);
 	}
 
 	for (int j = 0; j < DataCount; j++)
@@ -50,7 +50,7 @@ THashTable::THashTable(int _size, int _step)
 	for (int i = 0; i < maxSize; i++)
 	{
 		pRec[i].SetKey(EMPTY_NODE);
-		pRec[i].SetValue("");
+		pRec[i].SetValue(EMPTY_NODE);
 	}
 	GetHashFunc();
 	curr = -1;

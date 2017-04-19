@@ -1,8 +1,6 @@
 #ifndef _T_HASH_TABLE_H_
 #define _T_HASH_TABLE_H_
 
-#define EMPTY_NODE -1
-#define DELETED_NODE -2
 
 #include "TTable.h"
 #include <math.h>
