@@ -39,6 +39,7 @@ void THashTable::CreateNewTable()
 	{
 		InsRec(new_rec[j]);
 	}
+	delete[] new_rec;
 }
 
 THashTable::THashTable(int _size, int _step)
@@ -67,7 +68,7 @@ bool THashTable::Find(TKey key)
 		Eff++;
 		if (op > log(maxSize))
 		{
-
+			CreateNewTable();
 		}
 		if (pRec[curr].GetKey() == key)
 			return true;
@@ -92,10 +93,10 @@ void THashTable::InsRec(TRecord rec)
 		pRec[curr] = rec;
 		DataCount++;
 	}
-	else
+	/*else
 	{
 		cout << "Данная запись уже есть в таблице" << endl;
-	}
+	}*/
 }
 
 void THashTable::DelRec(TKey key)
@@ -106,10 +107,10 @@ void THashTable::DelRec(TKey key)
 		pRec[curr].SetKey("&");
 		DataCount--;
 	}
-	else
+	/*else
 	{
 		cout << "Данной записи нет в таблице" << endl;
-	}
+	}*/
 }
 
 void THashTable::Reset()
