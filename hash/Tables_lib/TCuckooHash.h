@@ -6,9 +6,11 @@
 class TCuckooHash :public THashTable 
 {
 protected:
-	virtual int HashFunc(int key);
+	virtual int HashFunc1(int key);
+	virtual int HashFunc2(int key);
 	virtual void GetHashFunc();
 
+	int coeff[8];
 public:
 	TCuckooHash(int _size = 0, int _step = 0) :THashTable(_size, _step) {};
 	virtual ~TCuckooHash() {};
