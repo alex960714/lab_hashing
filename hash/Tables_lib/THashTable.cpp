@@ -29,13 +29,15 @@ void THashTable::CreateNewTable()
 
 	delete[] pRec;
 	pRec = new TRecord[maxSize];
-	for (int i = 0; i < maxSize; i++)
+	/*for (int i = 0; i < maxSize; i++)
 	{
 		pRec[i].SetKey(EMPTY_NODE);
 		pRec[i].SetValue(EMPTY_NODE);
-	}
+	}*/
 
-	for (int j = 0; j < DataCount; j++)
+	int dc = DataCount;
+	DataCount = 0;
+	for (int j = 0; j < dc; j++)
 	{
 		InsRec(new_rec[j]);
 	}
@@ -47,11 +49,11 @@ THashTable::THashTable(int _size, int _step)
 	maxSize = _size;
 	step = _step;
 	pRec = new TRecord[maxSize];
-	for (int i = 0; i < maxSize; i++)
+	/*for (int i = 0; i < maxSize; i++)
 	{
 		pRec[i].SetKey(EMPTY_NODE);
 		pRec[i].SetValue(EMPTY_NODE);
-	}
+	}*/
 	GetHashFunc();
 	curr = -1;
 	DataCount = 0;

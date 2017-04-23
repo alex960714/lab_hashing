@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "THashTable.h"
+#include "TCuckooHash.h"
 #include <iostream>
 #include <locale.h>
 #include <time.h>
@@ -22,7 +23,7 @@ int main(int argc, char **argv)
 	cin >> step;
 	cout << "Введите число элементов в таблице:" << endl;
 	cin >> el_num;
-	THashTable hash(maxSize, step);
+	THashTable *hash = new TCuckooHash(maxSize, step);
 	for (int i = 0; i < el_num; i++)
 	{
 
@@ -31,36 +32,36 @@ int main(int argc, char **argv)
 
 		rec.SetKey(key);
 		rec.SetValue(val);
-		hash.InsRec(rec);
+		hash->InsRec(rec);
 	}
 	cout << "Введите количество операций: " << endl;
 	cin >> op_num;
 	s_num = 0;
 	ins_num = 0;
 	del_num = 0;
-	cout << "Число элементов в таблице: " << hash.GetDataCount() << endl;
+	cout << "Число элементов в таблице: " << hash->GetDataCount() << endl;
 	for (int i = 0; i < op_num; i++)
 	{
 		key = rand() % 10000;
 		val = rand() % 10000;
 
-		hash.ResetEff();
-		hash.Find(key);
-		s_num += hash.GetEff();
+		hash->ResetEff();
+		hash->Find(key);
+		s_num += hash->GetEff();
+
+		rec.SetKey(rand() % 10000);
+		rec.SetValue(rand() % 10000);
+
+		hash->ResetEff();
+		hash->InsRec(rec);
+		ins_num += hash->GetEff();
 
 		key = rand() % 10000;
 		val = rand() % 10000;
 
-		hash.ResetEff();
-		hash.InsRec(rec);
-		ins_num += hash.GetEff();
-
-		key = rand() % 10000;
-		val = rand() % 10000;
-
-		hash.ResetEff();
-		hash.DelRec(key);
-		del_num += hash.GetEff();
+		hash->ResetEff();
+		hash->DelRec(key);
+		del_num += hash->GetEff();
 	}
 	s_av = (double)(s_num) / op_num;
 	ins_av = (double)(ins_num) / op_num;
