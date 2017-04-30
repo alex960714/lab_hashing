@@ -68,10 +68,10 @@ bool THashTable::Find(int key)
 	while(true)
 	{
 		Eff++;
-		if (op > log(maxSize))
+		/*if (op > log(maxSize))
 		{
 			CreateNewTable();
-		}
+		}*/
 		if (pRec[curr].GetKey() == key)
 			return true;
 		if (pRec[curr].GetKey() == DELETED_NODE && free == -1)
@@ -90,10 +90,20 @@ bool THashTable::Find(int key)
 void THashTable::InsRec(TRecord rec)
 {
 	if (IsFull()) return;
+	int eff1 = Eff;
 	if (!Find(rec.GetKey()))
 	{
-		pRec[curr] = rec;
-		DataCount++;
+		int eff2 = Eff;
+		if (eff2 - eff1 > log(maxSize))
+		{
+			CreateNewTable();
+			InsRec(rec);
+		}
+		else
+		{
+			pRec[curr] = rec;
+			DataCount++;
+		}
 	}
 	/*else
 	{
