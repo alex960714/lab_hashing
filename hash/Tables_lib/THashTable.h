@@ -8,12 +8,12 @@
 class THashTable :public TTable
 {
 protected:
-	virtual int HashFunc(int key);
+	virtual int HashFunc(_int64 key);
 	virtual void GetHashFunc();
 	void CreateNewTable();
-
-	int maxSize, curr, step, free;
-	int coeff1, coeff2, prime;
+	
+	int maxSize, curr, step, free, col_num, create_num;
+	_int64 coeff1, coeff2, prime;
 	TRecord *pRec;
 
 public:
@@ -21,14 +21,17 @@ public:
 	virtual ~THashTable() { delete[] pRec; pRec = NULL; };
 
 	virtual bool IsFull() { return maxSize == DataCount; };
-	virtual bool Find(int key);
+	virtual bool Find(_int64 key);
 	virtual void InsRec(TRecord rec);
-	virtual void DelRec(int key);
+	virtual void DelRec(_int64 key);
 
 	virtual void Reset();
 	virtual void GoNext();
 	virtual bool IsEnd() { return curr == maxSize; };
 	virtual TRecord GetCurr() { return pRec[curr]; };
+	long int PrimeCalc();
+	int GetCollisionNum() { return col_num; };
+	int GetCreateNum() { return create_num; };
 };
 
 

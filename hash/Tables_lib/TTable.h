@@ -19,8 +19,8 @@ public:
 	bool IsEmpty() { return DataCount == 0; };
 	virtual bool IsFull() = 0;
 
-	virtual bool Find(int key) = 0;
-	virtual void DelRec(int key) = 0;
+	virtual bool Find(_int64 key) = 0;
+	virtual void DelRec(_int64 key) = 0;
 	virtual void InsRec(TRecord rec) = 0;
 
 	virtual void Reset() = 0;

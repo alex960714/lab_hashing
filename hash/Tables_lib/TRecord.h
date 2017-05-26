@@ -12,15 +12,15 @@ using namespace std;
 class TRecord
 {
 private:
-	int key;
+	_int64 key;
 	int val;
 
 public:
-	TRecord(int _k = EMPTY_NODE, int _v = EMPTY_NODE) { key = _k; val = _v; };
+	TRecord(_int64 _k = EMPTY_NODE, int _v = EMPTY_NODE) { key = _k; val = _v; };
 	~TRecord() {};
 
-	void SetKey(int _k) { key = _k; };
-	int GetKey() { return key; };
+	void SetKey(_int64 _k) { key = _k; };
+	_int64 GetKey() { return key; };
 	void SetValue(int _v) { val = _v; };
 	int GetValue() { return val; };
 

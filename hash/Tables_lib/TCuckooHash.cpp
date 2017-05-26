@@ -1,19 +1,21 @@
 #include "TCuckooHash.h"
 
-int TCuckooHash::HashFunc1(int key)
+int TCuckooHash::HashFunc1(_int64 key)
 {
-	return (coeff[0] * ((((key*key) % maxSize) * key) % maxSize) + coeff[1] * ((key*key) % maxSize) + coeff[2]*key + coeff[3]) % maxSize;
+	return (coeff[0] * key + coeff[1]) % prime % maxSize;
 }
 
-int TCuckooHash::HashFunc2(int key)
+int TCuckooHash::HashFunc2(_int64 key)
 {
-	return (coeff[4] * ((((key*key) % maxSize) * key) % maxSize) + coeff[5] * ((key*key) % maxSize) + coeff[6]*key + coeff[7]) % maxSize;
+	return (coeff[2] * key + coeff[3]) % prime % maxSize;
 }
 
 void TCuckooHash::GetHashFunc()
 {
-	for (int i = 0; i < 8; i++)
-		coeff[i] = rand() % (maxSize - 1) + 1;
+	coeff[0] = rand() % (prime - 1) + 1;
+	coeff[1] = rand() % prime;
+	coeff[2] = rand() % (prime - 1) + 1;
+	coeff[3] = rand() % prime;
 }
 
 bool TCuckooHash::FindEmpty(int hash_last, int hash_curr, int iter)
@@ -23,19 +25,29 @@ bool TCuckooHash::FindEmpty(int hash_last, int hash_curr, int iter)
 		hash_next = HashFunc1(pRec[hash_curr].GetKey());
 	Eff++;
 
-	if (pRec[hash_curr].GetKey() == EMPTY_NODE || pRec[hash_curr].GetKey() == DELETED_NODE || 
-		(iter < log(maxSize) && FindEmpty(hash_curr, hash_next, ++iter)))
+	if (pRec[hash_curr].GetKey() != EMPTY_NODE && pRec[hash_curr].GetKey() != DELETED_NODE)
+	{
+		if (iter < log(maxSize) && FindEmpty(hash_curr, hash_next, ++iter))
+		{
+			pRec[hash_curr].SetKey(pRec[hash_last].GetKey());
+			pRec[hash_curr].SetValue(pRec[hash_last].GetValue());
+			curr = hash_last;
+			return true;
+		}
+		else
+			col_num++;
+	}
+	else
 	{
 		pRec[hash_curr].SetKey(pRec[hash_last].GetKey());
 		pRec[hash_curr].SetValue(pRec[hash_last].GetValue());
 		curr = hash_last;
 		return true;
 	}
-	
 	return false;
 }
 
-bool TCuckooHash::Find(int key)
+bool TCuckooHash::Find(_int64 key)
 {
 	int val1 = HashFunc1(key), val2 = HashFunc2(key);
 	Eff++;
@@ -47,10 +59,11 @@ bool TCuckooHash::Find(int key)
 	Eff++;
 	if (pRec[val2].GetKey() == key)
 	{
+		col_num++;
 		curr = val2;
 		return true;
 	}
-
+	col_num++;
 	return false;
 }
 

@@ -45,18 +45,18 @@ class HashMap {
 private:
 	LinkedHashEntry **table;
 	int curr;
-	int coeff1, coeff2;
+	_int64 coeff1, coeff2, prime;
 	int TABLE_SIZE;
 
-	int HashFunc(int key)
+	int HashFunc(_int64 key)
 	{
-		return (coeff1 * key + coeff2) % TABLE_SIZE;
+		return ((coeff1 * key + coeff2) % prime) % TABLE_SIZE;
 	}
 
 	void GetHashFunc()
 	{
-		coeff1 = rand() % TABLE_SIZE+1;
-		coeff2 = rand() % TABLE_SIZE+1;
+		coeff1 = rand() % (prime - 1) + 1;
+		coeff2 = rand() % prime;
 	}
 
 	void CreateNewTable()
@@ -98,13 +98,14 @@ public:
 		effCount = 0;
 		dataCount = 0;
 		TABLE_SIZE = size;
+		prime = 7000001;
 		table = new LinkedHashEntry*[TABLE_SIZE];
 		GetHashFunc();
 		for (int i = 0; i < TABLE_SIZE; i++)
 			table[i] = NULL;
 	}
 
-	int get(int key) {
+	int get(_int64 key) {
 		int hash = HashFunc(key);
 		if (table[hash] == NULL) {
 			effCount++;
@@ -124,7 +125,7 @@ public:
 		}
 	}
 
-	void put(int key, int value) {
+	void put(_int64 key, int value) {
 		//cout << key << " | " << value << endl;
 		int hash = HashFunc(key);
 		effCount++;
@@ -135,12 +136,12 @@ public:
 		else {
 			LinkedHashEntry *entry = table[hash];
 			int count = 0;
-			while (entry->getNext() != NULL) {
+			while (entry->getKey() != key && entry->getNext() != NULL) {
 				count++;
 				entry = entry->getNext();
 			}
 			effCount += count;
-			if (count > log(TABLE_SIZE + dataCount)) {
+			if (count > log(TABLE_SIZE)) {
 				CreateNewTable();
 				put(key, value);
 			}
@@ -170,7 +171,7 @@ public:
 		}
 	}
 
-	void remove(int key) {
+	void remove(_int64 key) {
 		int hash = HashFunc(key);
 		effCount++;
 		if (table[hash] != NULL) {
