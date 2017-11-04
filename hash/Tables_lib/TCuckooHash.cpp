@@ -2,20 +2,20 @@
 
 int TCuckooHash::HashFunc1(_int64 key)
 {
-	return (coeff[0] * key + coeff[1]) % prime % maxSize;
+	return ((coeff[0] * key + coeff[1]) % prime_arr[prime]) % maxSize;
 }
 
 int TCuckooHash::HashFunc2(_int64 key)
 {
-	return (coeff[2] * key + coeff[3]) % prime % maxSize;
+	return ((coeff[2] * key + coeff[3]) % prime_arr[prime]) % maxSize;
 }
 
 void TCuckooHash::GetHashFunc()
 {
-	coeff[0] = rand() % (prime - 1) + 1;
-	coeff[1] = rand() % prime;
-	coeff[2] = rand() % (prime - 1) + 1;
-	coeff[3] = rand() % prime;
+	coeff[0] = rand() % (prime_arr[prime] - 1) + 1;
+	coeff[1] = rand() % prime_arr[prime];
+	coeff[2] = rand() % (prime_arr[prime] - 1) + 1;
+	coeff[3] = rand() % prime_arr[prime];
 }
 
 bool TCuckooHash::FindEmpty(int hash_last, int hash_curr, int iter)
@@ -34,8 +34,6 @@ bool TCuckooHash::FindEmpty(int hash_last, int hash_curr, int iter)
 			curr = hash_last;
 			return true;
 		}
-		else
-			col_num++;
 	}
 	else
 	{
@@ -59,11 +57,9 @@ bool TCuckooHash::Find(_int64 key)
 	Eff++;
 	if (pRec[val2].GetKey() == key)
 	{
-		col_num++;
 		curr = val2;
 		return true;
 	}
-	col_num++;
 	return false;
 }
 

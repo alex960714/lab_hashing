@@ -47,8 +47,8 @@ int main(int argc, char **argv)
 	for (int i = 0; i < el_num; i++)
 	{
 
-		key = (rand() * rand()) % prime;
-		val = (rand() * rand()) % prime;
+		key = (rand()*rand()) % maxSize;
+		val = rand() % maxSize;
 
 		rec.SetKey(key);
 		rec.SetValue(val);
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 	ofs.open("values.txt");
 	for (int i = 0; i < 4 * op_num; i++)
 	{
-		ofs << (rand() * rand()) % prime << " ";
+		ofs << (rand()*rand()) % maxSize << " ";
 	}
 	ofs.close();
 
@@ -205,37 +205,9 @@ int main(int argc, char **argv)
 	ifs.close();
 
 	cout << endl << "Число элементов в таблицах после выполнения операций: " << hash_open->GetDataCount() << endl;
-	cout << "Число коллизий в открытой адресации: " << hash_open->GetCollisionNum() << endl;
-	cout << "Число пересозданий таблицы в открытой адресации: " << hash_open->GetCreateNum() << endl;
-	cout << "Число коллизий в кукушке: " << hash_cuck->GetCollisionNum() << endl;
-	cout << "Число пересозданий таблицы в кукушке: " << hash_cuck->GetCreateNum() << endl;
-
 	s_av = (double)(s_num) / op_num;
 	ins_av = (double)(ins_num) / op_num;
 	del_av = (double)(del_num) / op_num;
-
-	cout << endl << "Открытая адресация:" << endl;
-	cout << "Поиск: " << s_av << endl;
-	cout << "Вставка: " << ins_av << endl;
-	cout << "Удаление: " << del_av << endl << endl;
-
-	s_av2 = (double)(s_num2) / op_num;
-	ins_av2 = (double)(ins_num2) / op_num;
-	del_av2 = (double)(del_num2) / op_num;
-
-	cout << "Метод цепочек:" << endl;
-	cout << "Поиск: " << s_av2 << endl;
-	cout << "Вставка: " << ins_av2 << endl;
-	cout << "Удаление: " << del_av2 << endl << endl;
-
-	s_av3 = (double)(s_num3) / op_num;
-	ins_av3 = (double)(ins_num3) / op_num;
-	del_av3 = (double)(del_num3) / op_num;
-
-	cout << "Метод кукушки:" << endl;
-	cout << "Поиск: " << s_av3 << endl;
-	cout << "Вставка: " << ins_av3 << endl;
-	cout << "Удаление: " << del_av3 << endl << endl;
 
 	cout << endl << "Время работы:" << endl;
 	cout << endl << "Открытая адресация:" << endl;

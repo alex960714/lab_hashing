@@ -46,22 +46,24 @@ private:
 	LinkedHashEntry **table;
 	int curr;
 	_int64 coeff1, coeff2, prime;
+	int prime_arr[5] = { 7000003, 15485867, 49979687, 32452867, 32452843 };
 	int TABLE_SIZE;
 
 	int HashFunc(_int64 key)
 	{
-		return ((coeff1 * key + coeff2) % prime) % TABLE_SIZE;
+		return ((coeff1 * key + coeff2) % prime_arr[prime]) % TABLE_SIZE;
 	}
 
 	void GetHashFunc()
 	{
-		coeff1 = rand() % (prime - 1) + 1;
-		coeff2 = rand() % prime;
+		coeff1 = rand() % (prime_arr[prime] - 1) + 1;
+		coeff2 = rand() % prime_arr[prime];
 	}
 
 	void CreateNewTable()
 	{
 		LinkedHashEntry *curr_rec, *new_rec = *table;
+		prime = ++prime % 5;
 		GetHashFunc();
 		dataCount = 0;
 		int i = -1;
@@ -98,7 +100,7 @@ public:
 		effCount = 0;
 		dataCount = 0;
 		TABLE_SIZE = size;
-		prime = 7000001;
+		prime = 0;
 		table = new LinkedHashEntry*[TABLE_SIZE];
 		GetHashFunc();
 		for (int i = 0; i < TABLE_SIZE; i++)

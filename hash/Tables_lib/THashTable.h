@@ -12,9 +12,10 @@ protected:
 	virtual void GetHashFunc();
 	void CreateNewTable();
 	
-	int maxSize, curr, step, free, col_num, create_num;
+	int maxSize, curr, step, free;
 	_int64 coeff1, coeff2, prime;
 	TRecord *pRec;
+	int prime_arr[5] = {7000003, 15485867, 49979687, 32452867, 32452843};
 
 public:
 	THashTable(int _size = 0, int _step = 0);
@@ -30,8 +31,6 @@ public:
 	virtual bool IsEnd() { return curr == maxSize; };
 	virtual TRecord GetCurr() { return pRec[curr]; };
 	long int PrimeCalc();
-	int GetCollisionNum() { return col_num; };
-	int GetCreateNum() { return create_num; };
 };
 
 
